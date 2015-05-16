@@ -16,6 +16,7 @@ The API takes a json argument as follows:
 Below the route table, a sample response from the "all" route.
 
 ## Routes
+There is a hosted version of this API at source.fap.no.
 
 | Route                           | HTTP method | Description            |
 | ------------------------------- | ----------- | ---------------------- |
