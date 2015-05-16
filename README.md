@@ -1,6 +1,8 @@
 # sourceapi
 API for quering Source servers, based on SourceLib
 
+At the moment, the API is tested with Counter-Strike: Source and Global Offensive.
+
 The API takes a json argument as follows:
 
     [
