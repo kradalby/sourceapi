@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from flask import Flask, request, json, abort
-from SourceQuery import SourceQuery as q
+from SourceLib.SourceQuery import SourceQuery as q
 
 app = Flask(__name__)
 
