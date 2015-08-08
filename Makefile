@@ -2,6 +2,7 @@ ENV=./env/bin
 SHELL := /bin/bash
 PYTHON=$(ENV)/python
 PIP=$(ENV)/pip
+SETUP=$(PYTHON) setup.py
 
 dev: 
 	$(PIP) install -r requirements/development.txt --upgrade
@@ -18,7 +19,7 @@ clean:
 	rm -rf *.egg-info
 
 test:
-	$(python) setup.py test
+	$(SETUP) test
 
 run:
 	$(PYTHON) app.py
