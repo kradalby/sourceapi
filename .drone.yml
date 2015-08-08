@@ -1,4 +1,3 @@
-# image: kradalby/python
 image: evonove/ci
 git:
   path: github.com/kradalby/sourceapi
