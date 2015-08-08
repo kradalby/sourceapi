@@ -13,6 +13,11 @@ prod:
 env:
 	virtualenv -p `which python3` env
 
+flake8:
+	flake8
+
+lint: flake8
+
 clean:
 	pyclean .
 	find . -name "*.pyc" -exec rm -rf {} \;

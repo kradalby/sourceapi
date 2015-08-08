@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import logging
+import logging.config
 
 from SourceLib.SourceQuery import SourceQuery
 
@@ -8,8 +9,12 @@ from flask import abort
 from flask import json
 from flask import request
 
+from logconf import LOGGING
+
 app = Flask(__name__)
 logger = logging.getLogger(__name__)
+logging.config.dictConfig(LOGGING)
+
 
 @app.route('/api/v1/all', methods=['POST'])
 def all():
