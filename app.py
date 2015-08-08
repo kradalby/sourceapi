@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import logging
 
 from SourceLib.SourceQuery import SourceQuery
 
@@ -8,7 +9,7 @@ from flask import json
 from flask import request
 
 app = Flask(__name__)
-
+logger = logging.getLogger(__name__)
 
 @app.route('/api/v1/all', methods=['POST'])
 def all():

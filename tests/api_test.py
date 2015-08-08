@@ -20,7 +20,7 @@ class GsoTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_json_response_for_all_routes_v1(self):
-        ROUTES = (
+        routes = (
             '/api/v1/all/',
             '/api/v1/serverinfo',
             '/api/v1/playerinfo',
@@ -30,7 +30,7 @@ class GsoTestCase(unittest.TestCase):
 
         test_server = 'z.fap.no:27015'
 
-        for route in ROUTES:
+        for route in routes:
             response = self.app.post(route, json.dumps([test_server]))
             self.assertEqual(response.status_code, 200)
             data = json.loads(response.content)
