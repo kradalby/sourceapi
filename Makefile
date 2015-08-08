@@ -17,9 +17,9 @@ clean:
 	find . -name "*.pyc" -exec rm -rf {} \;
 	rm -rf *.egg-info
 
-#test:
-#	$(MANAGE) test
-#
+test:
+	$(python) setup.py test
+
 run:
 	$(PYTHON) app.py
 

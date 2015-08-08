@@ -1,0 +1,15 @@
+# image: kradalby/python
+image: evonove/ci
+git:
+  path: github.com/kradalby/sourceapi
+
+env:
+
+script:
+    - pip install tox
+    - tox
+
+notify:
+  email:
+    recipients:
+      - kradalby@kradalby.no

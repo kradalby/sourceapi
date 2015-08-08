@@ -1,9 +1,14 @@
 #!/usr/bin/env python
 
-from flask import Flask, request, json, abort
-from SourceLib.SourceQuery import SourceQuery as q
+from SourceLib.SourceQuery import SourceQuery
+
+from flask import Flask
+from flask import abort
+from flask import json
+from flask import request
 
 app = Flask(__name__)
+
 
 @app.route('/api/v1/all', methods=['POST'])
 def all():
@@ -11,13 +16,14 @@ def all():
     if not request.json:
         abort(400)
     for ip, port in request.json:
-        s = q(ip, int(port))
-        servername = "%s:%s" % (ip,port)
+        s = SourceQuery(ip, int(port))
+        servername = '%s:%s' % (ip, port)
         response[servername] = s.info()
-        response[servername]["ping"] = s.ping()
-        response[servername]["rules"] = s.rules()
-        response[servername]["players"] = s.player()
+        response[servername]['ping'] = s.ping()
+        response[servername]['rules'] = s.rules()
+        response[servername]['players'] = s.player()
     return json.jsonify(response)
+
 
 @app.route('/api/v1/serverinfo', methods=['POST'])
 def serverinfo():
@@ -25,9 +31,10 @@ def serverinfo():
     if not request.json:
         abort(400)
     for ip, port in request.json:
-        s = q(ip, int(port))
-        response["%s:%s" % (ip,port)] = s.info()
+        s = SourceQuery(ip, int(port))
+        response['%s:%s' % (ip, port)] = s.info()
     return json.jsonify(response)
+
 
 @app.route('/api/v1/playerinfo', methods=['POST'])
 def playerinfo():
@@ -35,9 +42,10 @@ def playerinfo():
     if not request.json:
         abort(400)
     for ip, port in request.json:
-        s = q(ip, int(port))
-        response["%s:%s" % (ip,port)] = s.player()
+        s = SourceQuery(ip, int(port))
+        response['%s:%s' % (ip, port)] = s.player()
     return json.jsonify(response)
+
 
 @app.route('/api/v1/ping', methods=['POST'])
 def ping():
@@ -45,9 +53,10 @@ def ping():
     if not request.json:
         abort(400)
     for ip, port in request.json:
-        s = q(ip, int(port))
-        response["%s:%s" % (ip,port)] = s.ping()
+        s = SourceQuery(ip, int(port))
+        response['%s:%s' % (ip, port)] = s.ping()
     return json.jsonify(response)
+
 
 @app.route('/api/v1/rules', methods=['POST'])
 def rules():
@@ -55,8 +64,8 @@ def rules():
     if not request.json:
         abort(400)
     for ip, port in request.json:
-        s = q(ip, int(port))
-        response["%s:%s" % (ip,port)] = s.rules()
+        s = SourceQuery(ip, int(port))
+        response['%s:%s' % (ip, port)] = s.rules()
     return json.jsonify(response)
 
 if __name__ == '__main__':
