@@ -1,4 +1,6 @@
 # sourceapi
+[![Build Status](http://drone.fap.no/api/badge/github.com/kradalby/sourceapi/status.svg?branch=master)](http://drone.fap.no/github.com/kradalby/sourceapi)
+
 API for quering Source servers, based on SourceLib
 
 At the moment, the API is tested with Counter-Strike: Source and Global Offensive.
