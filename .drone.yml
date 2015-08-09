@@ -12,3 +12,11 @@ notify:
   email:
     recipients:
       - kradalby@kradalby.no
+
+
+deploy:
+  bash:
+    script:
+        - 'pip install ansible'
+        - 'git clone https://github.com/kradalby/plays.git'
+        - 'ansible-playbook -i plays/inventory plays/deploy/sourceapi.yml'
