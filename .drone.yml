@@ -1,4 +1,4 @@
-image: evonove/ci
+image: kradalby/ci-tox
 git:
   path: github.com/kradalby/sourceapi
 
