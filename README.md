@@ -1,5 +1,5 @@
 # sourceapi
-[![Build Status](http://drone.fap.no/api/badge/github.com/kradalby/sourceapi/status.svg?branch=master)](http://drone.fap.no/github.com/kradalby/sourceapi)
+[![Build Status](https://drone.fap.no/api/badges/kradalby/sourceapi/status.svg)](https://drone.fap.no/kradalby/sourceapi)
 
 API for quering Source servers, based on SourceLib
 

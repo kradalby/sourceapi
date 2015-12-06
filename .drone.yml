@@ -1,11 +1,7 @@
-image: kradalby/ci-tox
-git:
-  path: github.com/kradalby/sourceapi
-
-env:
-
-script:
-    - tox
+build:
+    image: kradalby/ci-tox
+    command:
+        - tox
 
 notify:
   email:
@@ -13,8 +9,8 @@ notify:
       - kradalby@kradalby.no
 
 
-deploy:
-  bash:
-    script:
-        - 'git clone https://github.com/kradalby/plays.git'
-        - 'ansible-playbook -i plays/inventory plays/deploy/sourceapi.yml'
+#deploy:
+#  bash:
+#    script:
+#        - 'git clone https://github.com/kradalby/plays.git'
+#        - 'ansible-playbook -i plays/inventory plays/deploy/sourceapi.yml'
