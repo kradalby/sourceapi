@@ -1,5 +1,6 @@
 build:
-    image: kradalby/ci-tox
+    image: golang
+    #image: kradalby/ci-tox
     pull: true
     command:
         - tox
