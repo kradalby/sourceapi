@@ -1,5 +1,5 @@
 build:
-    image: kradalby/ci-tox
+    image: synapse/tox:latest
     pull: true
     command:
         - tox
