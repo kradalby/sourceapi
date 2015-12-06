@@ -1,7 +1,7 @@
 build:
-    image: synapse/tox:latest
+    image: kradalby/ci-tox:latest
     pull: true
-    command:
+    commands:
         - tox
 
 notify:
