@@ -15,6 +15,9 @@ class GsoTestCase(unittest.TestCase):
     def test_logic(self):
         self.assertEqual(1, 1)
 
+    def fail(self):
+        self.assertEqual(1,2)
+
 #    def test_json_response_for_all_routes_v1(self):
 #        routes = (
 #            '/api/v1/all/',
