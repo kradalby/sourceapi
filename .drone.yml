@@ -1,12 +1,14 @@
 build:
-    image: golang
-    #image: kradalby/ci-tox
+    image: kradalby/ci-tox
     pull: true
     command:
         - tox
 
 notify:
   email:
+    from: drone@fap.no
+    host: smtp.stud.ntnu.no
+    port: 25
     recipients:
       - kradalby@kradalby.no
 
