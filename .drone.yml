@@ -13,9 +13,9 @@ notify:
       - kradalby@kradalby.no
 
 deploy:
-	host: onyx.fap.no
-	user: www
-	port: 22
-	commands:
-		- cd /usr/local/www/source.fap.no
-		- git pull
+    host: onyx.fap.no
+    user: www
+    port: 22
+    commands:
+        - cd /usr/local/www/source.fap.no
+        - git pull
