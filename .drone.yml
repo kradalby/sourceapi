@@ -2,7 +2,7 @@ build:
     image: kradalby/ci-tox:latest
     pull: true
     commands:
-        - tox
+      - tox
 
 notify:
   email:
@@ -13,9 +13,10 @@ notify:
       - kradalby@kradalby.no
 
 deploy:
+  ssh:
     host: onyx.fap.no
     user: www
     port: 22
     commands:
-        - cd /usr/local/www/source.fap.no
-        - git pull
+      - cd /usr/local/www/source.fap.no
+      - git pull
