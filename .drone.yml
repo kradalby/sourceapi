@@ -12,9 +12,10 @@ notify:
     recipients:
       - kradalby@kradalby.no
 
-
-#deploy:
-#  bash:
-#    script:
-#        - 'git clone https://github.com/kradalby/plays.git'
-#        - 'ansible-playbook -i plays/inventory plays/deploy/sourceapi.yml'
+deploy:
+	host: onyx.fap.no
+	user: www
+	port: 22
+	commands:
+		- cd /usr/local/www/source.fap.no
+		- git pull
