@@ -20,3 +20,4 @@ deploy:
     commands:
       - cd /usr/local/www/source.fap.no
       - git pull
+      - supervisorctl restart uwsgi_sourceapi
