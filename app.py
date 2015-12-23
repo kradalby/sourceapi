@@ -23,7 +23,7 @@ def all():
         abort(400)
     for ip, port in request.json:
         s = SourceQuery(ip, int(port))
-        servername = '%s:%s' % (ip, port)
+        servername = '{}:{}'.format(ip, port)
         response[servername] = s.info()
         response[servername]['ping'] = s.ping()
         response[servername]['rules'] = s.rules()
@@ -38,7 +38,7 @@ def serverinfo():
         abort(400)
     for ip, port in request.json:
         s = SourceQuery(ip, int(port))
-        response['%s:%s' % (ip, port)] = s.info()
+        response['{}:{}'.format(ip, port)] = s.info()
     return json.jsonify(response)
 
 
@@ -49,7 +49,7 @@ def playerinfo():
         abort(400)
     for ip, port in request.json:
         s = SourceQuery(ip, int(port))
-        response['%s:%s' % (ip, port)] = s.player()
+        response['{}:{}'.format(ip, port)] = s.player()
     return json.jsonify(response)
 
 
@@ -60,7 +60,7 @@ def ping():
         abort(400)
     for ip, port in request.json:
         s = SourceQuery(ip, int(port))
-        response['%s:%s' % (ip, port)] = s.ping()
+        response['{}:{}'.format(ip, port)] = s.ping()
     return json.jsonify(response)
 
 
@@ -71,7 +71,7 @@ def rules():
         abort(400)
     for ip, port in request.json:
         s = SourceQuery(ip, int(port))
-        response['%s:%s' % (ip, port)] = s.rules()
+        response['{}:{}'.format(ip, port)] = s.rules()
     return json.jsonify(response)
 
 if __name__ == '__main__':
