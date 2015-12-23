@@ -39,7 +39,7 @@ def all():
     if not request.json:
         return json.jsonify(NOT_VALID_JSON)
 
-    if not request.json['data']:
+    if not 'data' in request.json.keys():
         return json.jsonify(MISSING_DATA)
 
     try:
@@ -69,7 +69,7 @@ def serverinfo():
     if not request.json:
         return json.jsonify(NOT_VALID_JSON)
 
-    if not request.json['data']:
+    if not 'data' in request.json.keys():
         return json.jsonify(MISSING_DATA)
 
     try:
@@ -96,7 +96,7 @@ def playerinfo():
     if not request.json:
         return json.jsonify(NOT_VALID_JSON)
 
-    if not request.json['data']:
+    if not 'data' in request.json.keys():
         return json.jsonify(MISSING_DATA)
 
     try:
@@ -123,7 +123,7 @@ def ping():
     if not request.json:
         return json.jsonify(NOT_VALID_JSON)
 
-    if not request.json['data']:
+    if not 'data' in request.json.keys():
         return json.jsonify(MISSING_DATA)
 
     try:
@@ -150,7 +150,7 @@ def rules():
     if not request.json:
         return json.jsonify(NOT_VALID_JSON)
 
-    if not request.json['data']:
+    if not 'data' in request.json.keys():
         return json.jsonify(MISSING_DATA)
 
     try:
