@@ -5,7 +5,6 @@ import logging.config
 from SourceLib.SourceQuery import SourceQuery
 
 from flask import Flask
-from flask import abort
 from flask import json
 from flask import request
 
@@ -15,63 +14,162 @@ app = Flask(__name__)
 logger = logging.getLogger(__name__)
 logging.config.dictConfig(LOGGING)
 
+MISSING_DATA = {
+    'status': 'error',
+    'data': 'Missing data field'
+}
+
+NO_RESPONSE = {
+    'status': 'error',
+    'data': 'The server did not respond'
+}
+
+NOT_VALID_JSON = {
+    'status': 'error',
+    'data': 'The JSON is not valid'
+}
+
 
 @app.route('/api/v1/all', methods=['POST'])
 def all():
-    response = {}
+    response = {
+        'data': {}
+    }
+
     if not request.json:
-        abort(400)
-    for ip, port in request.json:
+        return json.jsonify(NOT_VALID_JSON)
+
+    if not request.json['data']:
+        return json.jsonify(MISSING_DATA)
+
+    try:
+        ip, port = request.json['data'].split(':')
+    except:
+        return json.jsonify(NOT_VALID_JSON)
+
+    try:
         s = SourceQuery(ip, int(port))
-        servername = '{}:{}'.format(ip, port)
-        response[servername] = s.info()
-        response[servername]['ping'] = s.ping()
-        response[servername]['rules'] = s.rules()
-        response[servername]['players'] = s.player()
+    except:
+        return json.jsonify(NO_RESPONSE)
+
+    servername = '{}:{}'.format(ip, port)
+    response['data'][servername] = s.info()
+    response['data'][servername]['ping'] = s.ping()
+    response['data'][servername]['rules'] = s.rules()
+    response['data'][servername]['players'] = s.player()
+    response['status'] = 'success'
     return json.jsonify(response)
 
 
 @app.route('/api/v1/serverinfo', methods=['POST'])
 def serverinfo():
-    response = {}
+    response = {
+        'data': {}
+    }
+
     if not request.json:
-        abort(400)
-    for ip, port in request.json:
+        return json.jsonify(NOT_VALID_JSON)
+
+    if not request.json['data']:
+        return json.jsonify(MISSING_DATA)
+
+    try:
+        ip, port = request.json['data'].split(':')
+    except:
+        return json.jsonify(NOT_VALID_JSON)
+
+    try:
         s = SourceQuery(ip, int(port))
-        response['{}:{}'.format(ip, port)] = s.info()
+    except:
+        return json.jsonify(NO_RESPONSE)
+
+    servername = '{}:{}'.format(ip, port)
+    response['data'][servername] = s.info()
+    response['status'] = 'success'
     return json.jsonify(response)
 
 
 @app.route('/api/v1/playerinfo', methods=['POST'])
 def playerinfo():
-    response = {}
+    response = {
+        'data': {}
+    }
+
     if not request.json:
-        abort(400)
-    for ip, port in request.json:
+        return json.jsonify(NOT_VALID_JSON)
+
+    if not request.json['data']:
+        return json.jsonify(MISSING_DATA)
+
+    try:
+        ip, port = request.json['data'].split(':')
+    except:
+        return json.jsonify(NOT_VALID_JSON)
+
+    try:
         s = SourceQuery(ip, int(port))
-        response['{}:{}'.format(ip, port)] = s.player()
+    except:
+        return json.jsonify(NO_RESPONSE)
+
+    servername = '{}:{}'.format(ip, port)
+    response['data'][servername] = s.player()
+    response['status'] = 'success'
     return json.jsonify(response)
 
 
 @app.route('/api/v1/ping', methods=['POST'])
 def ping():
-    response = {}
+    response = {
+        'data': {}
+    }
+
     if not request.json:
-        abort(400)
-    for ip, port in request.json:
+        return json.jsonify(NOT_VALID_JSON)
+
+    if not request.json['data']:
+        return json.jsonify(MISSING_DATA)
+
+    try:
+        ip, port = request.json['data'].split(':')
+    except:
+        return json.jsonify(NOT_VALID_JSON)
+
+    try:
         s = SourceQuery(ip, int(port))
-        response['{}:{}'.format(ip, port)] = s.ping()
+    except:
+        return json.jsonify(NO_RESPONSE)
+
+    servername = '{}:{}'.format(ip, port)
+    response['data'][servername] = s.ping()
+    response['status'] = 'success'
     return json.jsonify(response)
 
 
 @app.route('/api/v1/rules', methods=['POST'])
 def rules():
-    response = {}
+    response = {
+        'data': {}
+    }
+
     if not request.json:
-        abort(400)
-    for ip, port in request.json:
+        return json.jsonify(NOT_VALID_JSON)
+
+    if not request.json['data']:
+        return json.jsonify(MISSING_DATA)
+
+    try:
+        ip, port = request.json['data'].split(':')
+    except:
+        return json.jsonify(NOT_VALID_JSON)
+
+    try:
         s = SourceQuery(ip, int(port))
-        response['{}:{}'.format(ip, port)] = s.rules()
+    except:
+        return json.jsonify(NO_RESPONSE)
+
+    servername = '{}:{}'.format(ip, port)
+    response['data'][servername] = s.rules()
+    response['status'] = 'success'
     return json.jsonify(response)
 
 if __name__ == '__main__':
