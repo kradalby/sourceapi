@@ -1,16 +1,17 @@
-from app.db import Column, DateTime, String, Integer, Bool, func
-from app.db.dialects import postgresql
+#from app.db import Column, DateTime, String, Integer, Bool, func
+#from app.db.dialects import postgresql
+from flask.ext.sqlalchemy import SQLAlchemy
 
+db = SQLAlchemy()
 
-class Query(Base):
-    __tablename__ = "query"
-    id = Column(Integer, primary_key=True)
-    datetime = Column(DateTime, default=func.now())
-    request_origin = Column(postgresql.INET)
-    request_status = Column(String(10))
-    request_error_message = Column(String(100), nullable=True)
-    api_endpoint = Column(String(100))
-    game_server = Columnt(String(30), nullable=True)
+class Query(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    datetime = db.Column(db.DateTime, default=db.func.now())
+    request_origin = db.Column(db.String(30))
+    request_status = db.Column(db.String(10))
+    request_error_message = db.Column(db.String(100), nullable=True)
+    api_endpoint = db.Column(db.String(100))
+    game_server = db.Column(db.String(30))
 
     def __init__(self, request_origin, request_status, request_error_message, api_endpoint, game_server):
         self.request_origin = request_origin
@@ -25,3 +26,24 @@ class Query(Base):
             self.game_server,
             self.datetime
         )
+
+def record_query(req, err):
+    query = None
+    if err != None:
+        query = Query(
+            req.remote_addr,
+            'error',
+            err['type'],
+            req.path,
+            req.json['data']
+        )
+    else:
+        query = Query(
+            req.remote_addr,
+            'success',
+            None,
+            req.path,
+            req.json['data']
+        )
+    db.session.add(query)
+    db.session.commit()
