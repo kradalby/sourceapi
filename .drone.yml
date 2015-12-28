@@ -2,6 +2,7 @@ build:
     image: kradalby/ci-tox:latest
     pull: true
     commands:
+      - cp config.py.example config.py
       - tox
 
 notify:
