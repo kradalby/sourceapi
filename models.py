@@ -30,12 +30,17 @@ class Query(db.Model):
 def record_query(req, err):
     query = None
     if err != None:
+        game_server = ""
+        try:
+            game_server = req.json['data']
+        except:
+            pass
         query = Query(
             req.remote_addr,
             'error',
             err['type'],
             req.path,
-            req.json['data']
+            game_server
         )
     else:
         query = Query(
