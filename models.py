@@ -1,4 +1,4 @@
-from app.db import Column, DateTime, String, Integer, func
+from app.db import Column, DateTime, String, Integer, Bool, func
 from app.db.dialects import postgresql
 
 
@@ -10,7 +10,7 @@ class Query(Base):
     request_status = Column(String(10))
     request_error_message = Column(String(100), nullable=True)
     api_endpoint = Column(String(100))
-    game_server = Columnt(String(30))
+    game_server = Columnt(String(30), nullable=True)
 
     def __init__(self, request_origin, request_status, request_error_message, api_endpoint, game_server):
         self.request_origin = request_origin
