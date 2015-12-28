@@ -1,0 +1,2 @@
+[db]
+postgres_url = postgresql://localhost/test?user=fred&password=secret
