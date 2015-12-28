@@ -16,6 +16,8 @@ def create_payload(server):
 class SourceAPITestCase(unittest.TestCase):
 
     def setUp(self):
+        with sourceapi.app.app_context():
+            sourceapi.db.create_all()
         self.app = sourceapi.app.test_client()
 
     def tearDown(self):
