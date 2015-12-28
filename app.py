@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
-from models import db
+from models import db, Query
 
 from flask import Flask
+from flask import redirect
+from flask import json
 
 from v1 import v1
 
@@ -14,6 +16,22 @@ def create_app():
     return app
 
 app = create_app()
+
+@app.route('/')
+def index():
+    return redirect("https://github.com/kradalby/sourceapi/blob/master/README.md", code=302)
+
+@app.route('/stats')
+def stats():
+    total = Query.query.count()
+    success = Query.query.filter_by(request_status="success").count()
+    errors = Query.query.filter_by(request_status="error").count()
+    response = {
+        'total': total,
+        'success': success,
+        'errors': errors
+    }
+    return json.jsonify(response)
 
 if __name__ == '__main__':
     with app.app_context():
