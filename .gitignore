@@ -1,7 +1,7 @@
 # Created by https://www.gitignore.io
 #
 
-config.ini
+config.py
 
 ### Vim ###
 [._]*.s[a-w][a-z]
