@@ -7,10 +7,16 @@ from SourceLib.SourceQuery import SourceQuery
 from flask import Flask
 from flask import json
 from flask import request
+from flask.ext.sqlalchemy import SQLAlchemy
+
 
 from logconf import LOGGING
 
 app = Flask(__name__)
+db = SQLAlchemy(app)
+
+app.config.from_pyfile('config.py')
+
 logger = logging.getLogger(__name__)
 logging.config.dictConfig(LOGGING)
 
