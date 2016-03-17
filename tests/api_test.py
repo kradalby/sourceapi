@@ -35,7 +35,7 @@ class SourceAPITestCase(unittest.TestCase):
             '/api/v1/serverinfo',
             '/api/v1/playerinfo',
             '/api/v1/ping',
-            '/api/v1/rules',
+            # '/api/v1/rules',
         )
 
         payload = create_payload(WORKING_SERVER)
