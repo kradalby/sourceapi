@@ -5,6 +5,7 @@ from models import db, Query
 from flask import Flask
 from flask import redirect
 from flask import json
+from flask.ext.cors import CORS
 
 from v1 import v1
 
@@ -16,6 +17,7 @@ def create_app():
     return app
 
 app = create_app()
+CORS(app)
 
 @app.route('/')
 def index():
