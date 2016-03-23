@@ -41,8 +41,6 @@ def stats():
     user_agents_aggregated = db.session.query(Query.user_agent,
         label('amount', func.count(Query.user_agent))
     ).group_by(Query.user_agent).all()
-    print('User-Agents')
-    print(user_agents_aggregated)
     response = {
         'total': total,
         'success': success,

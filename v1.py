@@ -56,6 +56,5 @@ def root(function=None):
         record_query(request, None)
         return json.jsonify(response)
     except Exception as e:
-        print(e)
         record_query(request, NO_RESPONSE)
         return json.jsonify(NO_RESPONSE)
