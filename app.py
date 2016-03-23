@@ -9,6 +9,9 @@ from flask.ext.cors import CORS
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 
+from sqlalchemy import func
+from sqlalchemy.sql import label
+
 from v1 import v1
 
 def create_app():
@@ -35,10 +38,16 @@ def stats():
     total = Query.query.count()
     success = Query.query.filter_by(request_status="success").count()
     errors = Query.query.filter_by(request_status="error").count()
+    user_agents_aggregated = db.session.query(Query.user_agent,
+        label('amount', func.count(Query.user_agent))
+    ).group_by(Query.user_agent).all()
+    print('User-Agents')
+    print(user_agents_aggregated)
     response = {
         'total': total,
         'success': success,
-        'errors': errors
+        'errors': errors,
+        'user_agents': user_agents_aggregated
     }
     return json.jsonify(response)
 

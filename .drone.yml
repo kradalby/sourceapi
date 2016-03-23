@@ -23,4 +23,5 @@ deploy:
       - git pull
       - make env
       - make prod
+      - ./env/bin/python app.py db upgrade
       - supervisorctl restart uwsgi_sourceapi
