@@ -32,7 +32,7 @@ class Query(db.Model):
 def record_query(req, err):
     query = None
     if err != None:
-        game_server = ""
+        game_server = ''
         try:
             game_server = req.json['data']
         except:
