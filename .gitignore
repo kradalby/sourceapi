@@ -1,6 +1,7 @@
 # Created by https://www.gitignore.io
 #
 
+*.db
 config.py
 
 ### Vim ###

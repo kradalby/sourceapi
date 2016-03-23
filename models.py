@@ -12,13 +12,15 @@ class Query(db.Model):
     request_error_message = db.Column(db.String(100), nullable=True)
     api_endpoint = db.Column(db.String(100))
     game_server = db.Column(db.String(30))
+    user_agent = db.Column(db.String(2**16))
 
-    def __init__(self, request_origin, request_status, request_error_message, api_endpoint, game_server):
+    def __init__(self, request_origin, request_status, request_error_message, api_endpoint, game_server, user_agent):
         self.request_origin = request_origin
         self.request_status = request_status
         self.request_error_message = request_error_message
         self.api_endpoint = api_endpoint
         self.game_server = game_server
+        self.user_agent = user_agent
 
     def __repr__(self):
         return 'Query from: {} to {} at {}'.format(
@@ -40,7 +42,8 @@ def record_query(req, err):
             'error',
             err['type'],
             req.path,
-            game_server
+            game_server,
+            req.headers.get('User-Agent')
         )
     else:
         query = Query(
@@ -48,7 +51,8 @@ def record_query(req, err):
             'success',
             None,
             req.path,
-            req.json['data']
+            req.json['data'],
+            req.headers.get('User-Agent')
         )
     db.session.add(query)
     db.session.commit()
