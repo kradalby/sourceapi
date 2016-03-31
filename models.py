@@ -1,8 +1,7 @@
-#from app.db import Column, DateTime, String, Integer, Bool, func
-#from app.db.dialects import postgresql
 from flask.ext.sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
+
 
 class Query(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -12,7 +11,7 @@ class Query(db.Model):
     request_error_message = db.Column(db.String(100), nullable=True)
     api_endpoint = db.Column(db.String(100))
     game_server = db.Column(db.String(30))
-    user_agent = db.Column(db.String(2**16))
+    user_agent = db.Column(db.String(2 ** 16))
 
     def __init__(self, request_origin, request_status, request_error_message, api_endpoint, game_server, user_agent):
         self.request_origin = request_origin
@@ -29,9 +28,10 @@ class Query(db.Model):
             self.datetime
         )
 
+
 def record_query(req, err):
     query = None
-    if err != None:
+    if err is not None:
         game_server = ''
         try:
             game_server = req.json['data']

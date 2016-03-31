@@ -1,16 +1,15 @@
-import logging
-import logging.config
+from SourceLib.SourceQuery import SourceQuery
 
 from flask import Blueprint
 from flask import json
 from flask import request
 
-from SourceLib.SourceQuery import SourceQuery
-
-from models import Query, record_query
 from errors import *
 
+from models import record_query
+
 v1 = Blueprint('v1', __name__)
+
 
 @v1.route('/<function>', methods=['POST'])
 def root(function=None):
@@ -22,7 +21,7 @@ def root(function=None):
         record_query(request, NOT_VALID_JSON)
         return json.jsonify(NOT_VALID_JSON)
 
-    if not 'data' in request.json.keys():
+    if 'data' not in request.json.keys():
         record_query(request, MISSING_DATA)
         return json.jsonify(MISSING_DATA)
 
@@ -55,6 +54,6 @@ def root(function=None):
         response['status'] = 'success'
         record_query(request, None)
         return json.jsonify(response)
-    except Exception as e:
+    except Exception:
         record_query(request, NO_RESPONSE)
         return json.jsonify(NO_RESPONSE)
