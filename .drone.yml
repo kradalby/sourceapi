@@ -18,6 +18,8 @@ deploy:
     host: onyx.fap.no
     user: www
     port: 22
+    when:
+        branch: master
     commands:
       - cd /usr/local/www/source.fap.no
       - git pull
