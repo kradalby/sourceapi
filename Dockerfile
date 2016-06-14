@@ -28,9 +28,8 @@ RUN python3 -m pip install pip -U
 
 RUN pip3 install -r requirements/production.txt --upgrade
 
-RUN apk del \
-        build-base \
+RUN apk del build-base \
         python3-dev \
-        linux-headers \
+        linux-headers
 
 ENTRYPOINT ["/srv/app/docker-entrypoint.sh"]
