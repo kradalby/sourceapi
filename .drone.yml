@@ -13,17 +13,29 @@ notify:
     recipients:
       - kradalby@kradalby.no
 
-deploy:
-  ssh:
-    host: onyx.fap.no
-    user: www
-    port: 22
+publish:
+  docker:
+    registry: gengar.l.fap.no:5000
+    repo: sourceapi/sourceapi
+    tag: latest
+    insecure: true
     when:
         branch: master
+    load: docker/image.tar
+    save:
+      destination: docker/image.tar
+      tag: latest
+
+deploy:
+  ssh:
+    host:
+     - gengar.l.fap.no
+    user: root
+    port: 22
+    sleep: 2
     commands:
-      - cd /usr/local/www/source.fap.no
-      - git pull
-      - make env
-      - make prod
-      - ./env/bin/python app.py db upgrade
-      - supervisorctl restart uwsgi_sourceapi
+      - docker pull registry.fap.no/sourceapi/sourceapi:latest
+      - docker-compose -f /srv/docker/sourceapi/docker-compose.yml stop
+      - docker-compose -f /srv/docker/sourceapi/docker-compose.yml up -d
+    when:
+        branch: master
