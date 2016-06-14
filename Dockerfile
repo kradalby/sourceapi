@@ -28,12 +28,9 @@ RUN python3 -m pip install pip -U
 
 RUN pip3 install -r requirements/production.txt --upgrade
 
-RUN apk del postgresql-dev \
+RUN apk del \
         build-base \
         python3-dev \
-        jpeg-dev \
-        zlib-dev \
         linux-headers \
-        pcre-dev
 
 ENTRYPOINT ["/srv/app/docker-entrypoint.sh"]
