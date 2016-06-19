@@ -2,9 +2,8 @@ FROM alpine:3.4
 
 MAINTAINER Kristoffer Dalby
 
-EXPOSE 8080
-
 ENV DIR=/srv/app
+ENV LIBRARY_PATH=/lib:/usr/lib
 
 RUN apk update
 RUN apk add postgresql-dev \
@@ -18,18 +17,23 @@ RUN apk add postgresql-dev \
         git \
         pcre-dev
 
-ENV LIBRARY_PATH=/lib:/usr/lib
 
 WORKDIR $DIR
 
+# Install requirements
+COPY ./requirements $DIR/requirements
+RUN python3 -m pip install pip -U && \
+    pip3 install -r requirements/production.txt --upgrade
+
+# Delete unneeded files.
+RUN apk del build-base \
+        python-dev \
+        linux-headers
+
+# Copy project files
 COPY . $DIR
 
-RUN python3 -m pip install pip -U
 
-RUN pip3 install -r requirements/production.txt --upgrade
-
-RUN apk del build-base \
-        python3-dev \
-        linux-headers
+EXPOSE 8080
 
 ENTRYPOINT ["/srv/app/docker-entrypoint.sh"]
