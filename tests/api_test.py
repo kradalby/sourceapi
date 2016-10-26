@@ -81,8 +81,6 @@ class SourceAPITestCase(unittest.TestCase):
             '/api/v1/rules',
         )
 
-        payload = create_payload(NOT_WORKING_SERVER)
-
         for route in routes:
             response = self.app.post(
                 route,

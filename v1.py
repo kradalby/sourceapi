@@ -4,7 +4,7 @@ from flask import Blueprint
 from flask import json
 from flask import request
 
-from errors import *
+from errors import ENDPOINT_NOT_FOUND, MISSING_DATA, NO_RESPONSE, NOT_VALID_JSON
 
 from models import record_query
 

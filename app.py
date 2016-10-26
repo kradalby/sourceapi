@@ -43,8 +43,8 @@ def stats():
     success = Query.query.filter_by(request_status='success').count()
     errors = Query.query.filter_by(request_status='error').count()
     user_agents_aggregated = db.session.query(Query.user_agent,
-        label('amount', func.count(Query.user_agent))
-    ).group_by(Query.user_agent).all()
+                                              label('amount', func.count(Query.user_agent))
+                                             ).group_by(Query.user_agent).all()
     response = {
         'total': total,
         'success': success,
