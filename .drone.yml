@@ -15,7 +15,7 @@ notify:
 
 publish:
   docker:
-    registry: gengar.l.fap.no:5000
+    registry: registry.fap.no
     repo: sourceapi/sourceapi
     tag: latest
     insecure: true
@@ -29,7 +29,7 @@ publish:
 deploy:
   ssh:
     host:
-     - gengar.l.fap.no
+     - primeape.terra.fap.no
     user: root
     port: 22
     sleep: 2
