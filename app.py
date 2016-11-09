@@ -45,11 +45,15 @@ def stats():
     user_agents_aggregated = db.session.query(Query.user_agent,
                                               label('amount', func.count(Query.user_agent))
                                              ).group_by(Query.user_agent).all()
+    request_origin_aggregated = db.session.query(Query.request_origin,
+                                              label('amount', func.count(Query.request_origin))
+                                             ).group_by(Query.request_origin).all()
     response = {
         'total': total,
         'success': success,
         'errors': errors,
-        'user_agents': user_agents_aggregated
+        'user_agents': user_agents_aggregated,
+        'request_origin': request_origin_aggregated
     }
     return json.jsonify(response)
 
