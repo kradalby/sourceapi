@@ -1,41 +1,40 @@
-build:
-    image: kradalby/ci-tox:latest
-    pull: true
+pipeline:
+  test:
+    image: python:3.5.2
     commands:
+      - pip install tox
       - cp config.py.example config.py
       - tox
 
-notify:
-  email:
-    from: drone@fap.no
-    host: smtp.stud.ntnu.no
-    port: 25
-    recipients:
-      - kradalby@kradalby.no
-
-publish:
   docker:
-    registry: registry.fap.no
-    repo: sourceapi/sourceapi
-    tag: latest
+    image: plugins/docker
+    repo: registry.fap.no/sourceapi/sourceapi
     insecure: true
+    tags:
+        - latest
     when:
         branch: master
-    load: docker/image.tar
-    save:
-      destination: docker/image.tar
-      tag: latest
 
-deploy:
   ssh:
+    image: appleboy/drone-ssh
     host:
      - primeape.terra.fap.no
     user: root
     port: 22
-    sleep: 2
-    commands:
+    script:
       - docker pull registry.fap.no/sourceapi/sourceapi:latest
       - docker-compose -f /srv/docker/sourceapi/docker-compose.yml stop
       - docker-compose -f /srv/docker/sourceapi/docker-compose.yml up -d
     when:
+        status: success
         branch: master
+
+  notify:
+    image: drillster/drone-email
+    host: mail.ntnu.fap.no
+    port: 25
+    from: drone@drone.fap.no
+    recipients: [ kradalby@kradalby.no ]
+    when:
+      status: [ success, changed, failure ]
+
