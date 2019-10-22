@@ -1,40 +1,63 @@
-pipeline:
-  test:
-    image: python:3.5.2
-    commands:
-      - pip install tox
-      - cp config.py.example config.py
-      - tox
+---
+kind: pipeline
+name: default
 
-  docker:
-    image: plugins/docker
-    repo: registry.fap.no/sourceapi/sourceapi
-    insecure: true
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: test
+  pull: if-not-exists
+  image: python:3.5.2
+  commands:
+  - pip install tox
+  - cp config.py.example config.py
+  - tox
+
+- name: build
+  pull: if-not-exists
+  image: banzaicloud/drone-kaniko
+  settings:
+    repo: kradalby/sourceapi
     tags:
-        - latest
-    when:
-        branch: master
+    - ${DRONE_COMMIT_SHA:0:8}
+    - latest
+    cache: true
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
 
-  ssh:
-    image: appleboy/drone-ssh
-    host:
-     - primeape.terra.fap.no
-    user: root
-    port: 22
-    script:
-      - docker pull registry.fap.no/sourceapi/sourceapi:latest
-      - docker-compose -f /srv/docker/sourceapi/docker-compose.yml stop
-      - docker-compose -f /srv/docker/sourceapi/docker-compose.yml up -d
-    when:
-        status: success
-        branch: master
+- name: deploy
+  pull: if-not-exists
+  image: quay.io/honestbee/drone-kubernetes
+  settings:
+    container: common
+    deployment: sourceapi
+    namespace: sourceapi
+    repo: kradalby/sourceapi
+    tag:
+    - ${DRONE_COMMIT_SHA:0:8}
+  environment:
+    KUBERNETES_CERT:
+      from_secret: kubernetes_cert
+    KUBERNETES_SERVER:
+      from_secret: kubernetes_server
+    KUBERNETES_TOKEN:
+      from_secret: kubernetes_token
 
-  notify:
-    image: drillster/drone-email
+- name: notify
+  pull: if-not-exists
+  image: drillster/drone-email
+  settings:
+    from: drone@drone.fap.no
     host: mail.ntnu.fap.no
     port: 25
-    from: drone@drone.fap.no
-    recipients: [ kradalby@kradalby.no ]
-    when:
-      status: [ success, changed, failure ]
-
+    recipients:
+    - kradalby@kradalby.no
+  when:
+    status:
+    - success
+    - changed
+    - failure

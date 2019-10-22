@@ -4,9 +4,13 @@ from flask import json
 from flask import redirect
 from flask.ext.cors import CORS
 
+from werkzeug.wsgi import DispatcherMiddleware
+
 from flask_migrate import Migrate, MigrateCommand
 
 from flask_script import Manager
+
+from prometheus_client import make_wsgi_app
 
 from models import Query, db
 
@@ -57,9 +61,15 @@ def stats():
     }
     return json.jsonify(response)
 
+
+
+
 if __name__ == '__main__':
     # with app.app_context():
     #     db.create_all()
 
     # app.run()
+    app_dispatch = DispatcherMiddleware(app, {
+        '/metrics': make_wsgi_app()
+    })
     manager.run()
