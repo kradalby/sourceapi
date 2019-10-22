@@ -62,6 +62,7 @@ steps:
     port: 25
     recipients:
     - kradalby@kradalby.no
+    skip_verify: true
   when:
     status:
     - success
