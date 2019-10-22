@@ -58,7 +58,7 @@ steps:
   image: drillster/drone-email
   settings:
     from: drone@drone.fap.no
-    host: mail.ntnu.fap.no
+    host: smtp.fap.no
     port: 25
     recipients:
     - kradalby@kradalby.no
