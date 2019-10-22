@@ -3,7 +3,7 @@ import unittest
 
 import app as sourceapi
 
-WORKING_SERVER = '193.202.115.82:27115'
+WORKING_SERVER = '216.52.148.47:27015'
 NOT_WORKING_SERVER = 'fap.no:1337'
 
 
