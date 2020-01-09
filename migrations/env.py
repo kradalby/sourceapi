@@ -1,5 +1,7 @@
 from __future__ import with_statement
+# pyre-fixme[21]: Could not find `alembic`.
 from alembic import context
+# pyre-fixme[21]: Could not find `sqlalchemy`.
 from sqlalchemy import engine_from_config, pool
 from logging.config import fileConfig
 import logging
@@ -11,13 +13,16 @@ config = context.config
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 fileConfig(config.config_file_name)
-logger = logging.getLogger('alembic.env')
+# pyre-fixme[11]: Annotation `Logger` is not defined as a type.
+logger: Logger = logging.getLogger('alembic.env')
 
 # add your model's MetaData object here
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 from flask import current_app
+from logging import Logger
+
 config.set_main_option('sqlalchemy.url',
                        current_app.config.get('SQLALCHEMY_DATABASE_URI'))
 target_metadata = current_app.extensions['migrate'].db.metadata
@@ -28,7 +33,7 @@ target_metadata = current_app.extensions['migrate'].db.metadata
 # ... etc.
 
 
-def run_migrations_offline():
+def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
 
     This configures the context with just a URL
@@ -41,13 +46,14 @@ def run_migrations_offline():
 
     """
     url = config.get_main_option("sqlalchemy.url")
+    # pyre-fixme[18]: Global name `alembic` is undefined.
     context.configure(url=url)
 
     with context.begin_transaction():
         context.run_migrations()
 
 
-def run_migrations_online():
+def run_migrations_online() -> None:
     """Run migrations in 'online' mode.
 
     In this scenario we need to create an Engine
@@ -65,11 +71,13 @@ def run_migrations_online():
                 directives[:] = []
                 logger.info('No changes in schema detected.')
 
+    # pyre-fixme[18]: Global name `sqlalchemy` is undefined.
     engine = engine_from_config(config.get_section(config.config_ini_section),
                                 prefix='sqlalchemy.',
                                 poolclass=pool.NullPool)
 
     connection = engine.connect()
+    # pyre-fixme[18]: Global name `alembic` is undefined.
     context.configure(connection=connection,
                       target_metadata=target_metadata,
                       process_revision_directives=process_revision_directives,

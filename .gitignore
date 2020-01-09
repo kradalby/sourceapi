@@ -1,6 +1,9 @@
 # Created by https://www.gitignore.io
 #
 
+.pytype/
+.pyre/
+
 *.db
 config.py
 

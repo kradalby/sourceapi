@@ -15,21 +15,23 @@ def create_payload(server):
 
 class SourceAPITestCase(unittest.TestCase):
 
-    def setUp(self):
+    def setUp(self) -> None:
         with sourceapi.app.app_context():
             sourceapi.db.create_all()
         self.app = sourceapi.app.test_client()
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         pass
 
-    def test_logic(self):
+    def test_logic(self) -> None:
         self.assertEqual(1, 1)
 
-    def fail(self):
+    # pyre-fixme[15]: `fail` overrides method defined in `TestCase` inconsistently.
+    # pyre-fixme[14]: `fail` overrides method defined in `TestCase` inconsistently.
+    def fail(self) -> None:
         self.assertEqual(1, 2)
 
-    def test_json_response_for_all_routes_v1_with_working_server(self):
+    def test_json_response_for_all_routes_v1_with_working_server(self) -> None:
         routes = (
             '/api/v1/all',
             '/api/v1/serverinfo',
@@ -50,7 +52,7 @@ class SourceAPITestCase(unittest.TestCase):
             data = json.loads(response.data.decode('utf-8'))
             self.assertEqual(data['status'], 'success')
 
-    def test_json_response_for_all_routes_v1_with_not_working_server(self):
+    def test_json_response_for_all_routes_v1_with_not_working_server(self) -> None:
         routes = (
             '/api/v1/all',
             '/api/v1/serverinfo',
@@ -72,7 +74,7 @@ class SourceAPITestCase(unittest.TestCase):
             self.assertEqual(data['status'], 'error')
             self.assertEqual(data['data'], 'The server did not respond')
 
-    def test_json_response_for_all_routes_v1_with_missing_data(self):
+    def test_json_response_for_all_routes_v1_with_missing_data(self) -> None:
         routes = (
             '/api/v1/all',
             '/api/v1/serverinfo',

@@ -1,8 +1,11 @@
+# pyre-fixme[21]: Could not find `ext`.
 from flask.ext.sqlalchemy import SQLAlchemy
 
+# pyre-fixme[16]: Module `flask` has no attribute `ext`.
 db = SQLAlchemy()
 
 
+# pyre-fixme[11]: Annotation `Model` is not defined as a type.
 class Query(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     datetime = db.Column(db.DateTime, default=db.func.now())
@@ -13,7 +16,7 @@ class Query(db.Model):
     game_server = db.Column(db.String(30))
     user_agent = db.Column(db.String(2 ** 16))
 
-    def __init__(self, request_origin, request_status, request_error_message, api_endpoint, game_server, user_agent):
+    def __init__(self, request_origin, request_status, request_error_message, api_endpoint, game_server, user_agent) -> None:
         self.request_origin = request_origin
         self.request_status = request_status
         self.request_error_message = request_error_message
@@ -21,7 +24,7 @@ class Query(db.Model):
         self.game_server = game_server
         self.user_agent = user_agent
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return 'Query from: {} to {} at {}'.format(
             self.request_origin,
             self.game_server,
@@ -29,7 +32,7 @@ class Query(db.Model):
         )
 
 
-def record_query(req, err):
+def record_query(req, err) -> None:
     query = None
     if err is not None:
         game_server = ''

@@ -1,0 +1,11 @@
+{
+  "binary": "/Users/kradalby/.pip3/bin/pyre.bin",
+  "source_directories": [
+    "."
+  ],
+  "ignore_all_errors": [
+    "env",
+    ".pytype"
+  ],
+  "typeshed": "/Users/kradalby/.pip3/lib/pyre_check/typeshed/"
+}

@@ -1,7 +1,9 @@
+from typing import Any, Dict, Union
+
 import os
 
 
-LOGGING = {
+LOGGING: Dict[str, Union[Dict[str, Any], int]] = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+# pyre-fixme[21]: Could not find `setuptools`.
 from setuptools import find_packages, setup
 
 setup(
