@@ -8,11 +8,10 @@
    "steps": [
       {
          "commands": [
-            "pip install tox",
             "cp config.py.example config.py",
             "tox"
          ],
-         "image": "python:3",
+         "image": "themattrix/tox:latest",
          "name": "Python tox test",
          "pull": "always"
       },
