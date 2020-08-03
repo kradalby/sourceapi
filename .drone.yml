@@ -8,6 +8,24 @@
    "steps": [
       {
          "commands": [
+            "npm install prettier",
+            "npx prettier --check \"**/*.{ts,js,md,yaml,yml,sass,css,scss}\""
+         ],
+         "image": "node:lts",
+         "name": "prettier lint",
+         "pull": "always"
+      },
+      {
+         "commands": [
+            "python -m pip install black",
+            "python -m black --check"
+         ],
+         "image": "python:latest",
+         "name": "Python lint",
+         "pull": "always"
+      },
+      {
+         "commands": [
             "cp config.py.example config.py",
             "tox"
          ],
