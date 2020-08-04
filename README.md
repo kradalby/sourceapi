@@ -1,4 +1,5 @@
 # sourceapi
+
 [![Build Status](https://drone.fap.no/api/badges/kradalby/sourceapi/status.svg)](https://drone.fap.no/kradalby/sourceapi)
 
 API for quering Source servers, based on SourceLib
@@ -14,6 +15,7 @@ The API takes a json argument as follows:
 Below the route table, a sample response from the "all" route.
 
 ## Routes
+
 There is a hosted version of this API at source.fap.no.
 
 | Route                           | HTTP method | Description            |
@@ -24,8 +26,8 @@ There is a hosted version of this API at source.fap.no.
 | source.fap.no/api/v1/ping       | POST        | Get ping information   |
 | source.fap.no/api/v1/rules      | POST        | Get rules information  |
 
-
 ## Example response
+
 Note that the ping is based on the time from the given API instance.
 
     {
